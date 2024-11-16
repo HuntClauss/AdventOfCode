@@ -4,6 +4,7 @@ import (
 	day1 "advent-of-code-2023/day1"
 	day2 "advent-of-code-2023/day2"
 	day3 "advent-of-code-2023/day3"
+	day4 "advent-of-code-2023/day4"
 	"fmt"
 )
 
@@ -15,14 +16,14 @@ type Solver interface {
 }
 
 func main() {
-	days := []Solver{day1.Init(), day2.Init(), day3.Init()}
+	days := []Solver{day1.Init(), day2.Init(), day3.Init(), day4.Init()}
 
 	for i, day := range days {
-		fmt.Printf("----[ DAY %1d ]----\n", i+1)
+		fmt.Printf("--------------[ DAY %02d ]-------------\n", i+1)
 		fmt.Printf("  > Part 1 (test): %s\n", day.SolveTest1())
 		fmt.Printf("  > Part 2 (test): %s\n", day.SolveTest2())
 		fmt.Printf("  > Part 1       : %s\n", day.SolvePart1())
 		fmt.Printf("  > Part 2       : %s\n", day.SolvePart2())
-		fmt.Printf("-----------------\n")
+		fmt.Printf("-------------------------------------\n")
 	}
 }

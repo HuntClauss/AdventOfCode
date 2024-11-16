@@ -35,15 +35,41 @@ func getElem(matrix []string, row, col int) (rune, bool) {
 	return rune(matrix[row][col]), true
 }
 
-func hasSymbolAround(table []string, row, col int) bool {
+func hasNeighbor(table []string, row, col int, checkFunc func(rune) bool) bool {
 	neights := []helper.Pair[int]{{row, col - 1}, {row - 1, col - 1}, {row - 1, col}, {row - 1, col + 1}, {row, col + 1}, {row + 1, col + 1}, {row + 1, col}, {row + 1, col - 1}}
 	for _, n := range neights {
 		char, ok := getElem(table, n.A, n.B)
-		if ok && isSymbol(char) {
+		if ok && checkFunc(char) {
 			return true
 		}
 	}
 	return false
+}
+
+func getNumber(table []string, row, col int) int {
+	start, stop := col, col
+	for i := col; i >= 0; i-- {
+		if !isNumber(rune(table[row][i])) {
+			break
+		}
+
+		start = i
+	}
+
+	for i := col; i < len(table[row]); i++ {
+		if !isNumber(rune(table[row][i])) {
+			break
+		}
+
+		stop = i
+	}
+
+	num, err := strconv.Atoi(table[row][start : stop+1])
+	if err != nil {
+		log.Fatalln("cannot convert number:", err)
+	}
+
+	return num
 }
 
 func part1(file string) string {
@@ -74,7 +100,7 @@ func part1(file string) string {
 				start = j
 			}
 
-			if !serial && hasSymbolAround(table, i, j) {
+			if !serial && hasNeighbor(table, i, j, isSymbol) {
 				serial = true
 			}
 		}
@@ -83,6 +109,22 @@ func part1(file string) string {
 }
 
 func part2(file string) string {
+	table := make([]string, 0, 100)
+
+	for _, line := range helper.ReadLines(file) {
+		table = append(table, line)
+	}
+
+	//for i, row := range table {
+	//	for j, char := range row {
+	//		if char != '*' {
+	//			continue
+	//		}
+	//
+	//
+	//	}
+	//}
+
 	return "TODO"
 }
 

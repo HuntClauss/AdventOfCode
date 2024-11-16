@@ -3,6 +3,7 @@ package helper
 import (
 	"log"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -21,4 +22,13 @@ func ReadLines(filepath string) []string {
 
 type Pair[T any] struct {
 	A, B T
+}
+
+func MustParseInt(s string) int {
+	result, err := strconv.Atoi(s)
+	if err != nil {
+		log.Fatalln("cannot parse int:", err)
+	}
+
+	return result
 }
